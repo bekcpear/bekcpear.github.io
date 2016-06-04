@@ -1,1 +1,1 @@
-# Articles sets.
+# Article sets.
