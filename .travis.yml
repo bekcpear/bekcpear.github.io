@@ -1,0 +1,18 @@
+language: python
+
+python:
+    - "3.4"
+
+cache:
+  directories:
+    - cache
+
+before_install:
+    - sudo apt-get update
+
+
+install:
+    - sudo pip install pelican markdown
+
+script:
+    - make html
