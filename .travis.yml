@@ -15,4 +15,5 @@ install:
     - sudo pip install pelican markdown
 
 script:
+    - git clone --depth 1 https://github.com/Bekcpear/bekcpear.github.io output
     - make html
