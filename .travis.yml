@@ -18,4 +18,5 @@ install:
     - sudo pip install pelican markdown
 
 script:
+    - uname -a
     - echo $GIT_NAME
