@@ -20,6 +20,8 @@ script:
     - git config --global user.name "$GIT_NAME"
     - git clone --depth 1 https://$GH_TOKEN@github.com/Bekcpear/bekcpear.github.io git
     - cd git
+    - rm *.html
+    - rm *.pdf
     - make all
     
 after_success:
