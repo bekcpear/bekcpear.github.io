@@ -1,9 +1,9 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$]{$documentclass$}
-\usepackage{geometry} 		% 設定邊界
+\usepackage{geometry}           % 設定邊界
 \geometry{
   top=0.5in,
   inner=0.5in,
-  outer=0.5in
+  outer=0.5in,
   bottom=0.5in,
   paperwidth=297mm,
   paperheight=210mm,
@@ -23,17 +23,17 @@ $if(euro)$
   \usepackage{eurosym}
 $endif$
 \else % if luatex or xelatex
-  \usepackage{fontspec} 	% 允許設定字體
-  \usepackage{xeCJK} 		% 分開設置中英文字型
-  \setCJKmainfont{WenQuanYi Micro Hei} 	% 設定中文字型
-  \setmainfont{Prociono} 	% 設定英文字型
-  \setromanfont{Prociono} 	% 字型
+  \usepackage{fontspec}         % 允許設定字體
+  \usepackage{xeCJK}            % 分開設置中英文字型
+  \setCJKmainfont{WenQuanYi Micro Hei}  % 設定中文字型
+  \setmainfont{Prociono}     % 設定英文字型
+  \setromanfont{Prociono}    % 字型
   \setmonofont{DejaVu Sans Mono}
-  \linespread{1.2}\selectfont 	% 行距
-  \XeTeXlinebreaklocale "zh" 	% 針對中文自動換行
+  \linespread{1.2}\selectfont   % 行距
+  \XeTeXlinebreaklocale "zh"    % 針對中文自動換行
   \XeTeXlinebreakskip = 0pt plus 1pt % 字與字之間加入0pt至1pt的間距，確保左右對整齊
-  \parindent 0em 		% 段落縮進
-  \setlength{\parskip}{20pt} 	% 段落之間的距離
+  \parindent 0em                % 段落縮進
+  \setlength{\parskip}{20pt}    % 段落之間的距離
   \ifxetex
     \usepackage{xltxtra,xunicode}
   \fi
@@ -122,18 +122,13 @@ $endif$
 \setlength{\parindent}{0pt}
 %\setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
-
-\title{\huge 在OSX平台上的XeLaTeX中文測試} % 設置標題，使用巨大字體
-\author{FoolEgg.com} 		% 設置作者
-\date{February 2013} 		% 設置日期
+\author{Bekcpear.io}            % 設置作者
 \usepackage{titling}
-\setlength{\droptitle}{-8em} 	% 將標題移動至頁面的上面
+\setlength{\droptitle}{-8em}    % 將標題移動至頁面的上面
 
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\pagestyle{fancy}
-\fancyhead[R]{Bekcpear.io}
-\fancyhead[L]{\thepage}
+\pagestyle{fancyplain}
 
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
@@ -161,7 +156,9 @@ $endif$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 \date{$date$}
 
+%\usepackage{pdflscape}
 \begin{document}
+%\begin{landscape}
 $if(title)$
 \maketitle
 $endif$
@@ -200,4 +197,5 @@ $for(include-after)$
 $include-after$
 
 $endfor$
+%\end{landscape}
 \end{document}
