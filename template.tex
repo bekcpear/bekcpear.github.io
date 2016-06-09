@@ -26,8 +26,8 @@ $endif$
   \usepackage{fontspec}         % 允許設定字體
   \usepackage{xeCJK}            % 分開設置中英文字型
   \setCJKmainfont{WenQuanYi Micro Hei}  % 設定中文字型
-  \setmainfont{Prociono}     % 設定英文字型
-  \setromanfont{Prociono}    % 字型
+  \setmainfont{DejaVu Sans}     % 設定英文字型
+  \setromanfont{DejaVu Sans}    % 字型
   \setmonofont{DejaVu Sans Mono}
   \linespread{1.2}\selectfont   % 行距
   \XeTeXlinebreaklocale "zh"    % 針對中文自動換行
@@ -77,10 +77,6 @@ $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 $if(verbatim-in-note)$
-\usepackage{fancy}
-\fancyhf{}
-\rhead{Bekcpear.io}
-\lhead{Page \thepage}
 $endif$
 $if(tables)$
 \usepackage{longtable}
@@ -131,7 +127,12 @@ $endif$
 
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\pagestyle{fancyplain}
+\pagestyle{fancy}
+\definecolor{gray}{gray}{0.5}
+\fancyhf{}
+\lhead{\color{gray} \small \selectfont Page \thepage}
+\rhead{\color{gray} \small \selectfont Bekcpear.io}
+\renewcommand{\headrule}{\color{gray}\hrule}
 
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
