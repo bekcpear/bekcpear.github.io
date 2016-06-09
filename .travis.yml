@@ -9,20 +9,11 @@ python:
 before_install:
     - sudo add-apt-repository ppa:texlive-backports/ppa -y
     - sudo apt-get update
-    - wget -O source-han-sans-1.004R.tar.gz https://github.com/adobe-fonts/source-han-sans/archive/1.004R.tar.gz
-    - tar xf source-han-sans-1.004R.tar.gz
-    - mkdir -p ~/.fonts
-    - cp -r source-han-sans-1.004R/* ~/.fonts
-    - mkdir -p ~/.config/fontconfig/
-    - curl http://cfp.vim-cn.com/cbJQ > ~/.config/fontconfig/fonts.conf
-    - cp ~/.config/fontconfig/fonts.conf ~/.fonts.conf
-    - sudo fc-cache -v
-    - fc-match -s "Source Han Sans"
 
 install:
     - wget https://github.com/jgm/pandoc/releases/download/1.17.1/pandoc-1.17.1-2-amd64.deb
     - sudo dpkg -i pandoc-1.17.1-2-amd64.deb
-    - sudo apt-get install texlive-xetex texlive-latex-extra
+    - sudo apt-get install ttf-wqy-microhei texlive-xetex texlive-latex-extra
 
 script:
     - git config --global user.email "$GIT_EMAIL"
