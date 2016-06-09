@@ -1,10 +1,12 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$]{$documentclass$}
 \usepackage{geometry} 		% 設定邊界
 \geometry{
-  top=0.3in,
-  inner=0.3in,
-  outer=0.3in
-  bottom=0.3in,
+  top=0.5in,
+  inner=0.5in,
+  outer=0.5in
+  bottom=0.5in,
+  paperwidth=297mm,
+  paperheight=210mm,
   headheight=3ex,
   headsep=2ex
 }
@@ -160,7 +162,6 @@ $endif$
 \date{$date$}
 
 \begin{document}
-\begin{landscape}
 $if(title)$
 \maketitle
 $endif$
@@ -199,5 +200,4 @@ $for(include-after)$
 $include-after$
 
 $endfor$
-\end{landscape}
 \end{document}
