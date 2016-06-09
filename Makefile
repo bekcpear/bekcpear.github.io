@@ -11,4 +11,4 @@ $(OBJECTS): %.html: %.md
         pandoc $< -o $@
 
 $(OBJECTS_PDF): %.pdf: %.md
-        pandoc --latex-engine=xelatex $< -o $@
+        pandoc --template=./template.tex --latex-engine=xelatex  $< -o $@
