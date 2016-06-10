@@ -21,7 +21,7 @@ sudo dpkg -i pandoc-1.17.1-2-amd64.deb</code></pre>
 sudo add-apt-repository ppa:texlive-backports/ppa
 sudo apt-get update
 sudo apt-get install texlive-xetex texlive-latex-extra</code></pre>
-<p>默认情况下，转换中文时会出现不显示中文字体的情况，那是因为pandoc下的XeLaTeX模版没有默认设置中文，需要做如下的添加,<a href="https://github.com/Bekcpear/bekcpear.articlemake/blob/master/template.tex">完整的模版</a>：</p>
+<p>默认情况下，转换中文时会出现不显示中文字体的情况，那是因为pandoc下的XeLaTeX模版没有默认设置中文，需要做如下的添加，<a href="https://github.com/Bekcpear/bekcpear.articlemake/blob/master/template.tex">完整的模版</a>：</p>
 <pre><code>\usepackage{fontspec}         % 允许设置字体
 \usepackage{xeCJK}            % 分别设置中英文
 \setCJKmainfont{WenQuanYi Micro Hei}  % 设置中文字体，当然前提是有这个字体存在
@@ -45,7 +45,7 @@ sudo apt-get install texlive-xetex texlive-latex-extra</code></pre>
             linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
             pdfborder={0 0 0}}</code></pre>
 <h2 id="如何使用makefile">如何使用Makefile</h2>
-<p>可以参考的一个说明是<a href="http://scc.qibebt.cas.cn/docs/linux/base/%B8%FA%CE%D2%D2%BB%C6%F0%D0%B4Makefile-%B3%C2%F0%A9.pdf">这个</a>，用到了里面所写的静态模式、（自动化）变量和伪目标。</p>
+<p>可以参考的一个说明是<a href="https://iccce.co/s/0njSzyO9OGxp3Mq">这个</a>，用到了里面所写的静态模式、（自动化）变量和伪目标。</p>
 <pre><code>SOURCES := $(wildcard *.md)
 OBJECTS := $(patsubst %.md, %.html, $(wildcard *.md))
 OBJECTS_PDF := $(patsubst %.md, %.pdf, $(wildcard *.md))
