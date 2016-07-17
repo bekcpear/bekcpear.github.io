@@ -1,7 +1,7 @@
 <p>邮件系统中的单元往往会有相互重复的功能，对于初学者的我来说，肯定是需要好好整理归纳的。本文会以传统的邮件收发模式为模型，结合Postfix这个邮件服务器实现来说明其结构原理。会穿插一些DNS的相关知识，正解和反解对于邮件服务器是比较重要的，对于如何处理垃圾邮件、病毒也有会说明。希望整理出一个适用的小型邮件服务器实例（Webmail+密码认证方式管理的客户端）——搭起来+垃圾/广告/病毒过滤+账户安全性+隐私。</p>
 <h2 id="邮件组成">邮件组成</h2>
 <ul>
-<li>符合RFC5322的邮件头和邮件主体，就邮件头而言：1）针对收信端的<em>To</em>直接收信者、<em>Cc</em>抄送者、<em>Bcc</em>暗送者；2）针对发送端的<em>From</em>最原始发信者、<em>Sender</em>其他发信者、<em>Reply-To</em>设置回信地址非原始地址。</li>
+<li>符合RFC5322的邮件头和邮件主体，就邮件头而言：1）针对收信端有：<em>To</em>直接收信者、<em>Cc</em>抄送者、<em>Bcc</em>暗送者等；2）针对发送端有：<em>From</em>最原始发信者、<em>Sender</em>其他发信者、<em>Reply-To</em>设置回信地址非原始地址等。</li>
 <li>符合<a href="https://en.wikipedia.org/wiki/MIME">MIME</a>规范的非文本附件</li>
 </ul>
 <h2 id="明确几个定义">明确几个定义</h2>
@@ -24,7 +24,7 @@
 <li>直接将参数放在文件里面后指向指定文件</li>
 <li>通过type:table这样子的模式来设定值，详细的看<a href="http://www.postfix.org/DATABASE_README.html">Postfix Lookup Table</a>。</li>
 </ol>
-<p><strong>mydomain</strong>：这个定义的就是本服务器在互联网中属于哪一个域名，默认是myhostname值去掉由.分隔的第一个字符后的值，可以不设置。参数设置方法：1</p>
+<p><strong>mydomain</strong>：这个定义的就是本服务器在互联网中属于哪一个域名，默认是myhostname值去掉由.分隔的第一个字符后所得的值，可以不设置。参数设置方法：1</p>
 <p><strong>myhostname</strong>：这个比较重要，建议采用FQDN格式，比如：mail.bekcpear.io。参数设置方法：1</p>
 <p><strong>myorigin</strong>：这个就是邮件发信地点了，比如在邮件头的mail from下显示。一般设置为myhostname即可，但是根据官方的文档来看，说如果一个域名下由多台邮件服务器，应该将这个值设置为域名，并做好别名数据库，分别指向不同用户，不是很懂，暂且忽略。</p>
 <p><strong>mydestination</strong>：定义的是可以被MDA分发到的主机，默认值是：<code>mydestination = $myhostname, localhost.$mydomain, localhost</code>。针对目的地的用户名是在/etc/passwd和/etc/alias这两个文件下设置的，注意虚拟域名有其单独设置的地方，不要在这边设置；备用的MX记录也不是设置在这边的。参数设置方法：2/3/4</p>
