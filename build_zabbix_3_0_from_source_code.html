@@ -98,7 +98,7 @@ fi
 </code></pre>
 <h3 id="q如何配置php并使之适合zabbix3.0.4">Q：如何配置php并使之适合zabbix3.0.4？</h3>
 <p>A：配置项目其实很少，如下：</p>
-<ol start="0" style="list-style-type: decimal">
+<ol style="list-style-type: decimal">
 <li>复制启动文件 <code>/usr/local/src/php-7.0.10/sapi/fpm/php-fpm.service</code> 到 <code>/lib/systemd/system/php-fpm.service</code>，并修改里面的路径到程序主目录</li>
 <li>新建用户php-fpm和组php-fpm</li>
 <li>两个示例文件 <code>/usr/local/php/etc/php-fpm.conf.example</code> 和 <code>/usr/local/php/etc/php-fpm.d/www.conf.example</code>，去掉example字样</li>
@@ -159,7 +159,10 @@ php_value[date.timezone] = &quot;Asia/Shanghai&quot;</code></pre>
 }</code></pre>
 <h2 id="准备工作结束了如何编译安装zabbix呢">准备工作结束了，如何编译安装Zabbix呢？</h2>
 <p>其实可以参考<a href="https://www.zabbix.com/documentation/3.0/manual/installation/install#installation_from_sources">官方网站</a>的内容，也很简单。</p>
-<p>整理了一下如下： ###1.下载<a href="http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/3.0.4/zabbix-3.0.4.tar.gz/download">源码包</a>，解压并进入。这个我没有找到校验文件... ###2.创建用户，一般就创建一个组为zabbix的zabbix用户即可，注意的是，当Zabbix的server和agent同时运行在一台主机上时，推荐是将server的运行用户独立于agent的运行用户的，不然agent可以访问server的配置文件，甚至数据库。 ###3.创建数据库，这个在源码包里面有现成的脚本，一般这样子使用（针对我的Mysql数据库）：</p>
+<p>整理了一下如下：</p>
+<h3 id="下载源码包解压并进入这个我没有找到校验文件...">1.下载<a href="http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/3.0.4/zabbix-3.0.4.tar.gz/download">源码包</a>，解压并进入。这个我没有找到校验文件...</h3>
+<h3 id="创建用户一般就创建一个组为zabbix的zabbix用户即可注意的是当zabbix的server和agent同时运行在一台主机上时推荐是将server的运行用户独立于agent的运行用户的不然agent可以访问server的配置文件甚至数据库">2.创建用户，一般就创建一个组为zabbix的zabbix用户即可，注意的是，当Zabbix的server和agent同时运行在一台主机上时，推荐是将server的运行用户独立于agent的运行用户的，不然agent可以访问server的配置文件，甚至数据库。</h3>
+<h3 id="创建数据库这个在源码包里面有现成的脚本一般这样子使用针对我的mysql数据库">3.创建数据库，这个在源码包里面有现成的脚本，一般这样子使用（针对我的Mysql数据库）：</h3>
 <pre><code>shell&gt; mysql -uroot -p&lt;password&gt;
 mysql&gt; create database zabbix character set utf8 collate utf8_bin;
 mysql&gt; grant all privileges on zabbix.* to zabbix@localhost identified by &#39;&lt;password&gt;&#39;;
