@@ -12,6 +12,21 @@
         padding-top: 100px;
         font-family: monospace,Arial;
       }
+      #logo {
+        margin-bottom: 30px;
+      }
+      #desc {
+        margin-bottom: 30px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        display: inline-block;
+        padding: 10px;
+        font-size: 22px;
+      }
       a {
         transition-property: color;
         transition-duration: 0.55s;
@@ -30,18 +45,28 @@
   </head>
 
   <body>
-    <img src="/images/logo/ume.ink-noSpace.svg" />
-    <br />
-    <br />
-    Welcome to my site
-    <br />
-    <br />
-    <span style='font-size: 11px; color: #666'>(very fresh, main color: #37abc8)</span>
-    <br />
-    <br />
-    Blog: <a href='https://moego.me'>未雨未歇</a>
- | Keybase: <a href='https://keybase.io/iyi'>iyi</a>
- | Telegram: <a href='https://t.me/Bekcpear'>@Bekcpear</a>
+    <div id="logo">
+      <img src="/images/logo/ume.ink-noSpace.svg" />
+    </div>
+    <div id="desc">
+      Welcome to my site
+    </div>
+    <div id="links">
+      <ul>
+        <li>
+          <a href='https://moego.me' title="未雨未歇">BLOG</a>
+        </li>
+        <li>
+          <a href='https://github.com/bekcpear' title="@Bekcpear">GITHUB</a>
+        </li>
+        <li>
+          <a href='https://t.me/Bekcpear' title="@Bekcpear">TELEGRAM</a>
+        </li>
+        <li>
+          <a href='mailto:i@ume.ink' target="_blank" title="mailto:i@ume.ink">EMAIL</a>
+        </li>
+      </ul>
+    </div>
     <br />
     <br />
   </body>
