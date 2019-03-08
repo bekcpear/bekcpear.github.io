@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/logo/ume.ink.fav.ico" />
+    <link rel="stylesheet" href="main.css" />
+    <style>
+      body {
+        background-color: #f0f0f0;
+        padding-top: 30px;
+      }
+      #textWrapper {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        text-align: left;
+      }
+      #textWrapper textarea {
+        width: calc(100% - 44px);
+        max-width: 756px;
+        height: 400px;
+        padding: 20px;
+        border: 2px solid #f24632;
+        background-color: #fff;
+        resize: none;
+        font-size: 16px;
+      }
+      #textWrapper textarea:focus {
+        outline-color: #f24632;
+      }
+      #textWrapper .info {
+        padding: 7px 1px;
+        font-size: 8px;
+        color: #666;
+      }
+      .hidden {
+        display: none;
+      }
+      #cpBt:after {
+        padding-left: 5px;
+        font-size: 10px;
+        color: #f24632;
+        content: attr(data-value);
+      }
+    </style>
+
+    <title> Encrypt a message - UME.INK </title>
+  </head>
+
+  <body>
+    <div class="leftAlign leftMargin">
+      <a href="index.html">< Back</a>
+    </div>
+    <div id="textWrapper">
+      <h5 id="notify">type a message:</h5>
+      <textarea id="msgbox" autofocus></textarea>
+      <button id='encBt' onclick="encrypt()">encrypt it with my PGP public key</button>
+      <button id='editBt' class="hidden" onclick="edit()">back to edit mode</button>
+      <span id='cpBt' class="hidden"><button onclick="copy()">COPY</button></span>
+      <div class="info">Powered by OpenPGP.js, works well with recent versions of Chrome, Firefox, Safari and Edge</div>
+    </div>
+    <script src="openpgp.min.js"></script>
+    <script>
+      const openpgp = typeof window !== 'undefined' && window.openpgp ? window.openpgp : require('openpgp');
+      const pubkey =
+        ['-----BEGIN PGP PUBLIC KEY BLOCK-----',
+        '',
+        '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',
+        'XuKuSJW2tgcvAWAEvr9DeLmRbh8O9XVz7Q+m',
+        '=R2ly',
+        '-----END PGP PUBLIC KEY BLOCK-----'].join('\n');
+        var msg = '';
+        const notif  = document.getElementById('notify');
+        const encBt  = document.getElementById('encBt');
+        const cpBtS  = document.getElementById('cpBt');
+        const editBt = document.getElementById('editBt');
+        const msgB   = document.getElementById('msgbox');
+
+        const encryptFunction = async(m) => {
+          const options = {
+            message: openpgp.message.fromText(m),
+            publicKeys: (await openpgp.key.readArmored(pubkey)).keys
+          }
+          return openpgp.encrypt(options).then(ciphertext => {
+            encrypted = ciphertext.data
+            return encrypted
+          });
+        }
+        var encrypt = async() => {
+          msg = msgB.value;
+          encBt.innerHTML = 'encrypt it with my PGP public key (encrypting..)';
+          cipher = (await encryptFunction(msg));
+          msgB.value = cipher;
+          notif.innerHTML = 'the encrypted message:';
+          msgB.disabled = true;
+          msgB.style.backgroundColor = '#f3f3f3';
+          encBt.style.display = 'none';
+          editBt.style.display = 'inline-block';
+          cpBtS.style.display = 'inline-block';
+          if (window.getSelection) {window.getSelection().removeAllRanges();}
+          else if (document.selection) {document.selection.empty();}
+          cpBtS.setAttribute('data-value', '');
+        }
+        function copy() {
+          cpBtS.setAttribute('data-value', '');
+          msgB.disabled=false;
+          msgB.select();
+          msgB.disabled=true;
+          document.execCommand("copy");
+          cpBtS.setAttribute('data-value', 'copied!');
+        }
+        function edit() {
+          msgB.value = msg;
+          notif.innerHTML = 'type a message:';
+          msgB.disabled = false;
+          msgB.focus();
+          msgB.style.backgroundColor = '#fff';
+          encBt.innerHTML = 'encrypt it with my PGP public key';
+          encBt.style.display = 'inline-block';
+          editBt.style.display = 'none';
+          cpBtS.style.display = 'none';
+        }
+    </script>
+  </body>
+</html>

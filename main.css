@@ -1,0 +1,41 @@
+::selection  {
+    background: #ffc2bb;
+}
+::-moz-selection {
+    background: #ffc2bb;
+}
+body {
+  color: #333;
+  font-size: 17px;
+  text-align:center;
+  margin: 20px auto;
+  padding-top: 100px;
+  font-family: monospace,Arial;
+}
+a {
+  transition-property: color;
+  transition-duration: 0.55s;
+  color: #333;
+  text-decoration: underline dashed;
+}
+a:hover {
+  transition-property: color;
+  transition-duration: 0.55s;
+  color: #f24632;
+  text-decoration: underline dashed;
+}
+button {
+  border: 1px solid #f24632;
+  background-color: #f24632;
+  color: #fff;
+  cursor: pointer;
+}
+button:focus {
+  outline-color: #f24632;
+}
+.leftAlign {
+  text-align: left;
+}
+.leftMargin {
+  margin-left: 100px;
+}
