@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" type="image/x-icon" href="/images/logo/ume.ink.fav.ico" />
     <link rel="stylesheet" href="main.css" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <style>
       body {
         background-color: #f0f0f0;
         padding-top: 30px;
       }
       #textWrapper {
-        width: 100%;
+        width: calc(100% - 20px);
         max-width: 800px;
         margin: 20px auto;
+        padding: 0 10px;
         text-align: left;
       }
       #textWrapper textarea {
@@ -56,6 +58,7 @@
       <textarea id="msgbox" autofocus></textarea>
       <button id='encBt' onclick="encrypt()">encrypt it with my PGP public key</button>
       <button id='editBt' class="hidden" onclick="edit()">back to edit mode</button>
+      <a id='sendm' class="hidden buttonStyle" href="" target="_blank">mail to me</a>
       <span id='cpBt' class="hidden"><button onclick="copy()">COPY</button></span>
       <div class="info">Powered by OpenPGP.js, works well with recent versions of Chrome, Firefox, Safari and Edge</div>
     </div>
@@ -175,6 +178,7 @@
         var msg = '';
         const notif  = document.getElementById('notify');
         const encBt  = document.getElementById('encBt');
+        const sendBt = document.getElementById('sendm');
         const cpBtS  = document.getElementById('cpBt');
         const editBt = document.getElementById('editBt');
         const msgB   = document.getElementById('msgbox');
@@ -195,22 +199,37 @@
           cipher = (await encryptFunction(msg));
           msgB.value = cipher;
           notif.innerHTML = 'the encrypted message:';
+          sendBt.href='mailto:i@ume.ink?subject='
+            + encodeURIComponent('A message from UME.INK')
+            + '&body='
+            + encodeURIComponent(cipher);
           msgB.disabled = true;
           msgB.style.backgroundColor = '#f3f3f3';
           encBt.style.display = 'none';
+          sendBt.style.display = 'inline-block';
           editBt.style.display = 'inline-block';
           cpBtS.style.display = 'inline-block';
-          if (window.getSelection) {window.getSelection().removeAllRanges();}
-          else if (document.selection) {document.selection.empty();}
+          window.getSelection().removeAllRanges();
           cpBtS.setAttribute('data-value', '');
         }
         function copy() {
           cpBtS.setAttribute('data-value', '');
-          msgB.disabled=false;
-          msgB.select();
-          msgB.disabled=true;
-          document.execCommand("copy");
-          cpBtS.setAttribute('data-value', 'copied!');
+          if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+            var range = document.createRange();
+            msgB.disabled=false;
+            range.selectNodeContents(msgB);
+            var s = window.getSelection();
+            s.removeAllRanges();
+            s.addRange(range);
+            msgB.setSelectionRange(0, 999999);
+            msgB.disabled=true;
+          } else {
+            msgB.disabled=false;
+            msgB.select();
+            msgB.disabled=true;
+          }
+          copied = window.getSelection().rangeCount > 0 && document.execCommand("copy");
+          cpBtS.setAttribute('data-value', copied ? 'copied!' : 'uncopied!');
         }
         function edit() {
           msgB.value = msg;
@@ -219,7 +238,9 @@
           msgB.focus();
           msgB.style.backgroundColor = '#fff';
           encBt.innerHTML = 'encrypt it with my PGP public key';
+          sendBt.href = '';
           encBt.style.display = 'inline-block';
+          sendBt.style.display = 'none';
           editBt.style.display = 'none';
           cpBtS.style.display = 'none';
         }

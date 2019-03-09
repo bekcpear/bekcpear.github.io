@@ -24,18 +24,44 @@ a:hover {
   color: #f24632;
   text-decoration: underline dashed;
 }
-button {
+button, .buttonStyle {
   border: 1px solid #f24632;
   background-color: #f24632;
   color: #fff;
   cursor: pointer;
+  align-items: flex-start;
+  text-align: center;
+	box-sizing: border-box;
+  text-rendering: auto;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-transform: none;
+	text-indent: 0px;
+	text-shadow: none;
+	display: inline-block;
+	text-align: start;
+	margin: 0em;
+  padding: 1px 6px;
+	font: 400 13.3333px Arial;
+  text-decoration: none;
 }
-button:focus {
-  outline-color: #f24632;
+button:focus, a.buttonStyle:active  {
+  outline: none;
+  border: 1px solid #f24632;
+  -webkit-box-shadow: 0px 0px 5px #f24632;
+  box-shadow: 0px 0px 5px #f24632;
+}
+.buttonStyle:hover {
+  text-decoration: none;
+  color: #fff;
 }
 .leftAlign {
   text-align: left;
 }
+.pullRight {
+  display: inline-block;
+  float: right;
+}
 .leftMargin {
-  margin-left: 100px;
+  margin-left: 50px;
 }

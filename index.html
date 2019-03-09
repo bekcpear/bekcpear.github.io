@@ -4,9 +4,16 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" type="image/x-icon" href="/images/logo/ume.ink.fav.ico" />
     <link rel="stylesheet" href="main.css" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <style>
       #logo {
+        width: calc(100% - 40px);
+        max-width: 700px;
+        margin: 0 auto;
         margin-bottom: 30px;
+      }
+      #logo img {
+        width: 100%;
       }
       #desc {
         margin-bottom: 30px;
@@ -20,6 +27,11 @@
         padding: 10px;
         font-size: 22px;
       }
+      #pubkey {
+        width: calc(100% - 20px);
+        max-width: 450px;
+        margin: 10px auto;
+      }
       #pubkey a {
         font-size: 12px;
       }
@@ -30,8 +42,8 @@
       }
       #pgpkey {
         display: block;
-        margin: 10px auto;
-        width: 410px;
+        width: calc(100% - 40px);
+        margin: 10px 0;
         height: 40px;
         resize: none;
         padding: 20px;
@@ -197,11 +209,22 @@ XuKuSJW2tgcvAWAEvr9DeLmRbh8O9XVz7Q+m
     function copyKey(e) {
       e.parentElement.setAttribute('data-value', '');
       const pgpkey = document.getElementById("pgpkey");
-      pgpkey.disabled=false;
-      pgpkey.select();
-      pgpkey.disabled=true;
-      document.execCommand("copy");
-      e.parentElement.setAttribute('data-value', 'copied!');
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        var range = document.createRange();
+        pgpkey.disabled=false;
+        range.selectNodeContents(pgpkey);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(range);
+        pgpkey.setSelectionRange(0, 999999);
+        pgpkey.disabled=true;
+      } else {
+        pgpkey.disabled=false;
+        pgpkey.select();
+        pgpkey.disabled=true;
+      }
+      copied = window.getSelection().rangeCount > 0 && document.execCommand("copy");
+      e.parentElement.setAttribute('data-value', copied ? 'copied!' : 'uncopied!');
     }
   </script>
 </html>
