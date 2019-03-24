@@ -35,15 +35,36 @@
       #pubkey a {
         font-size: 12px;
       }
+      #pubkey code {
+        font-size: 10px;
+      }
       #pubkey .buts::after {
         font-size: 10px;
         color: #f24632;
         content: attr(data-value);
       }
+      #pubkey span.key-des::before {
+        content: "PUBLIC KEYS";
+        position: relative;
+        top: -2px;
+        color: #aaa;
+      }
+      #pubkey span.key-des {
+        margin-top: 10px;
+      }
+      #pubkey span.key-des, #pubkey span.fp-des {
+        display: block;
+        padding: 0;
+        font-size: 10px;
+        font-family: 'Gotham Bold';
+        text-align: left;
+        height: 8px;
+        background-color: #ccc;
+      }
       #pgpkey {
         display: block;
         width: calc(100% - 40px);
-        margin: 10px 0;
+        margin: 0;
         height: 40px;
         resize: none;
         padding: 20px;
@@ -55,6 +76,26 @@
         text-align: left;
         font-family: monospace;
         font-size: 10px;
+      }
+      #pubkey span.fp-des-dec {
+        display: block;
+        height: 8px;
+        background-color: #eee;
+      }
+      #pubkey span.fp-des::before {
+        content: "PRIMARY KEY FINGERPRINT";
+        position: relative;
+        top: -2px;
+        color: #aaa;
+      }
+      #pubkey pre.fp {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        padding: 3px 0;
+        overflow: auto;
+        color: #555;
+        background-color: #eee;
       }
     </style>
 
@@ -86,10 +127,12 @@
     </div>
     <div id='pubkey'>
       <h4>My PGP Key</h4>
-      <a href="./0x9B53A3F52D7259DA">0x9B53A3F52D7259DA</a>
+      <a href="./0x9B53A3F52D7259DA">Download binary version</a>
+      <code>or</code>
       <span class='buts'>
         <button onclick="copyKey(this)">COPY</button>
       </span>
+      <span class="key-des"></span>
       <textarea id='pgpkey' disabled>
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -200,6 +243,9 @@ xhrbz7qO1sH74+uUEvUh5bC4MIc3u+v5trWcHYW6+bLrDam2o9Ak0KY/Z7Xza9VI
 XuKuSJW2tgcvAWAEvr9DeLmRbh8O9XVz7Q+m
 =R2ly
 -----END PGP PUBLIC KEY BLOCK-----</textarea>
+      <span class="fp-des-dec"></span>
+      <span class="fp-des"></span>
+      <pre class="fp">E515 736F 3D15 0DB3 3615  8399 9B53 A3F5 2D72 59DA</pre>
       <a href="emsg.html">
         Encrypt a message.
       </a>

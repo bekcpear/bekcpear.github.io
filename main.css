@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Gotham Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Gotham Bold'), url('Gotham-Bold.woff') format('woff');
+}
 ::selection  {
     background: #ffc2bb;
 }
@@ -9,7 +15,7 @@ body {
   font-size: 17px;
   text-align:center;
   margin: 20px auto;
-  padding-top: 100px;
+  padding-top: 60px;
   font-family: monospace,Arial;
 }
 a {
