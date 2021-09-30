@@ -64,7 +64,6 @@
     </div>
     <script src="/openpgp.min.js" integrity="sha384-TS0uWY7lSW2o43PKPc6ICKryJRZV2gtYvuV/U/h0hKkCC/DIDxOHRIo6w/tH+ql7"></script>
     <script>
-      const openpgp = typeof window !== 'undefined' && window.openpgp ? window.openpgp : require('openpgp');
       const pubkey =
         ['-----BEGIN PGP PUBLIC KEY BLOCK-----',
          '',
@@ -117,14 +116,12 @@
         const msgB   = document.getElementById('msgbox');
 
         const encryptFunction = async(m) => {
-          const options = {
-            message: openpgp.message.fromText(m),
-            publicKeys: (await openpgp.key.readArmored(pubkey)).keys
-          }
-          return openpgp.encrypt(options).then(ciphertext => {
-            encrypted = ciphertext.data
-            return encrypted
+          const publicKey = await openpgp.readKey({ armoredKey: pubkey });
+          const encrypted = await openpgp.encrypt({
+              message: await openpgp.createMessage({ text: m }),
+              encryptionKeys: publicKey
           });
+          return encrypted;
         }
         var encrypt = async() => {
           msg = msgB.value;
