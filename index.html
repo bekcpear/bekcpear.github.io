@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="description" content="Ryan's home page." />
     <meta name="keywords" content="pgp, homepage, contact" />
-    <meta name="author" content="bekcpear" />
+    <meta name="author" content="cwittlut" />
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="/images/logo/ume.ink.fav.ico" />
     <link rel="stylesheet" href="main.css" />
@@ -30,37 +30,42 @@
         padding: 10px;
         font-size: 22px;
       }
+      hr {
+        height: 5px;
+        background: #eee;
+        border: none;
+      }
       @media (max-width: 450px) {
         li {
           font-size: 16px;
         }
       }
-      #pubkey {
+      .pubkey {
         width: calc(100% - 20px);
         max-width: 450px;
         margin: 10px auto;
       }
-      #pubkey a {
+      .pubkey a {
         font-size: 12px;
       }
-      #pubkey code {
+      .pubkey code {
         font-size: 10px;
       }
-      #pubkey .buts::after {
+      .pubkey .buts::after {
         font-size: 10px;
         color: #f24632;
         content: attr(data-value);
       }
-      #pubkey span.key-des::before {
+      .pubkey span.key-des::before {
         content: "PUBLIC KEYS";
         position: relative;
         top: -2px;
         color: #aaa;
       }
-      #pubkey span.key-des {
+      .pubkey span.key-des {
         margin-top: 10px;
       }
-      #pubkey span.key-des, #pubkey span.fp-des {
+      .pubkey span.key-des, .pubkey span.fp-des {
         display: block;
         padding: 0;
         font-size: 10px;
@@ -69,7 +74,7 @@
         height: 8px;
         background-color: #ccc;
       }
-      #pgpkey {
+      .key {
         display: block;
         width: calc(100% - 40px);
         margin: 0;
@@ -85,18 +90,18 @@
         font-family: monospace;
         font-size: 10px;
       }
-      #pubkey span.fp-des-dec {
+      .pubkey span.fp-des-dec {
         display: block;
         height: 8px;
         background-color: #eee;
       }
-      #pubkey span.fp-des::before {
+      .pubkey span.fp-des::before {
         content: "PRIMARY KEY FINGERPRINT";
         position: relative;
         top: -2px;
         color: #aaa;
       }
-      #pubkey pre.fp {
+      .pubkey pre.fp {
         font-size: 14px;
         font-weight: bold;
         margin: 0 0 10px 0;
@@ -123,25 +128,85 @@
           <a href='https://bitbili.net' title="bitbili">BLOG</a>
         </li>
         <li>
-          <a href='https://github.com/bekcpear' title="@Bekcpear">GITHUB</a>
+          <a href='https://gitlab.com/cwittlut' title="@cwittlut">GITLAB</a>
         </li>
         <li>
-          <a href='https://t.me/Bekcpear' title="@Bekcpear">TELEGRAM</a>
+          <a href='https://github.com/bekcpear' title="@bekcpear">GITHUB</a>
+        </li>
+        <li>
+          <a href='https://t.me/cwittlut' title="@cwittlut">TELEGRAM</a>
         </li>
         <li>
           i[🅰🆃]bitbili.net
         </li>
       </ul>
     </div>
-    <div id='pubkey'>
-      <h4>My PGP Key</h4>
+    <div class='pubkey'>
+      <h4>My ED25519 Key</h4>
+      <a href="./0x510A72801905CE16">Download binary version</a>
+      <code>or</code>
+      <span class='buts'>
+        <button onclick="copyKey(this)">COPY</button>
+      </span>
+      <span class="key-des"></span>
+      <textarea class='key' disabled>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+nHJWF2OEBA==
+=/sAR
+-----END PGP PUBLIC KEY BLOCK-----</textarea>
+      <span class="fp-des-dec"></span>
+      <span class="fp-des"></span>
+      <pre class="fp">6390 AC9F 6D5A 7FCD 9BDE  1E20 510A 7280 1905 CE16</pre>
+      <a href="ecemsg.html">Encrypt a message</a>
+    </div>
+    <hr />
+    <div class='pubkey'>
+      <h4>My RSA Key</h4>
       <a href="./0x510BE6FB0FBDFC2A">Download binary version</a>
       <code>or</code>
       <span class='buts'>
         <button onclick="copyKey(this)">COPY</button>
       </span>
       <span class="key-des"></span>
-      <textarea id='pgpkey' disabled>
+      <textarea class='key' disabled>
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBF9Lm0EBEACWMgrYPK6Xu3AV51iNX9EPJdR41pT51jLPTWOLGr1RhyySA8Al
@@ -275,20 +340,20 @@ tzC6c/ClswJ3y5yRnHU7g1nvjgkwVQ==
   <script>
     function copyKey(e) {
       e.parentElement.setAttribute('data-value', '');
-      const pgpkey = document.getElementById("pgpkey");
+      const key = e.parentElement.parentElement.getElementsByClassName("key")[0];
       if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
         var range = document.createRange();
-        pgpkey.disabled=false;
-        range.selectNodeContents(pgpkey);
+        key.disabled=false;
+        range.selectNodeContents(key);
         var s = window.getSelection();
         s.removeAllRanges();
         s.addRange(range);
-        pgpkey.setSelectionRange(0, 999999);
-        pgpkey.disabled=true;
+        key.setSelectionRange(0, 999999);
+        key.disabled=true;
       } else {
-        pgpkey.disabled=false;
-        pgpkey.select();
-        pgpkey.disabled=true;
+        key.disabled=false;
+        key.select();
+        key.disabled=true;
       }
       copied = window.getSelection().rangeCount > 0 && document.execCommand("copy");
       e.parentElement.setAttribute('data-value', copied ? 'copied!' : 'uncopied!');

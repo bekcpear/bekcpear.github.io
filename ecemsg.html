@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/logo/ume.ink.fav.ico" />
+    <link rel="stylesheet" href="main.css" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <style>
+      body {
+        background-color: #f0f0f0;
+        padding-top: 30px;
+      }
+      #textWrapper {
+        width: calc(100% - 20px);
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 10px;
+        text-align: left;
+      }
+      #textWrapper textarea {
+        width: calc(100% - 44px);
+        max-width: 756px;
+        height: 300px;
+        padding: 20px;
+        border: 2px solid #f24632;
+        background-color: #fff;
+        resize: none;
+        font-size: 16px;
+      }
+      #textWrapper textarea:focus {
+        outline-color: #f24632;
+      }
+      #textWrapper .info {
+        padding: 7px 1px;
+        font-size: 8px;
+        color: #666;
+      }
+      .hidden {
+        display: none;
+      }
+      #cpBt:after {
+        padding-left: 5px;
+        font-size: 10px;
+        color: #f24632;
+        content: attr(data-value);
+      }
+    </style>
+
+    <title> Encrypt a message - UME.INK </title>
+  </head>
+
+  <body>
+    <div class="leftAlign leftMargin">
+      <a href="index.html">< Back</a>
+    </div>
+    <div id="textWrapper">
+      <h5 id="notify">type a message:</h5>
+      <textarea id="msgbox" autofocus></textarea>
+      <button id='encBt' onclick="encrypt()">encrypt it with my PGP public key</button>
+      <button id='editBt' class="hidden" onclick="edit()">back to edit mode</button>
+      <a id='sendm' class="hidden buttonStyle" href="" target="_blank">mail to me</a>
+      <span id='cpBt' class="hidden"><button onclick="copy()">COPY</button></span>
+      <div class="info">Powered by OpenPGP.js, works well with recent versions of Chrome, Firefox, Safari and Edge</div>
+    </div>
+    <script src="/openpgp.min.js" integrity="sha384-TS0uWY7lSW2o43PKPc6ICKryJRZV2gtYvuV/U/h0hKkCC/DIDxOHRIo6w/tH+ql7"></script>
+    <script>
+      const openpgp = typeof window !== 'undefined' && window.openpgp ? window.openpgp : require('openpgp');
+      const pubkey =
+        ['-----BEGIN PGP PUBLIC KEY BLOCK-----',
+         '',
+         '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',
+         'nHJWF2OEBA==',
+         '=/sAR',
+         '-----END PGP PUBLIC KEY BLOCK-----'].join('\n');
+        var msg = '';
+        const notif  = document.getElementById('notify');
+        const encBt  = document.getElementById('encBt');
+        const sendBt = document.getElementById('sendm');
+        const cpBtS  = document.getElementById('cpBt');
+        const editBt = document.getElementById('editBt');
+        const msgB   = document.getElementById('msgbox');
+
+        const encryptFunction = async(m) => {
+          const options = {
+            message: openpgp.message.fromText(m),
+            publicKeys: (await openpgp.key.readArmored(pubkey)).keys
+          }
+          return openpgp.encrypt(options).then(ciphertext => {
+            encrypted = ciphertext.data
+            return encrypted
+          });
+        }
+        var encrypt = async() => {
+          msg = msgB.value;
+          encBt.innerHTML = 'encrypt it with my PGP public key (encrypting..)';
+          cipher = (await encryptFunction(msg));
+          msgB.value = cipher;
+          notif.innerHTML = 'the encrypted message:';
+          sendBt.href='mailto:i@bitbili.net?subject='
+            + encodeURIComponent('A message from UME.INK')
+            + '&body='
+            + encodeURIComponent(cipher);
+          msgB.disabled = true;
+          msgB.style.backgroundColor = '#f3f3f3';
+          encBt.style.display = 'none';
+          sendBt.style.display = 'inline-block';
+          editBt.style.display = 'inline-block';
+          cpBtS.style.display = 'inline-block';
+          window.getSelection().removeAllRanges();
+          cpBtS.setAttribute('data-value', '');
+        }
+        function copy() {
+          cpBtS.setAttribute('data-value', '');
+          if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+            var range = document.createRange();
+            msgB.disabled=false;
+            range.selectNodeContents(msgB);
+            var s = window.getSelection();
+            s.removeAllRanges();
+            s.addRange(range);
+            msgB.setSelectionRange(0, 999999);
+            msgB.disabled=true;
+          } else {
+            msgB.disabled=false;
+            msgB.select();
+            msgB.disabled=true;
+          }
+          copied = window.getSelection().rangeCount > 0 && document.execCommand("copy");
+          cpBtS.setAttribute('data-value', copied ? 'copied!' : 'uncopied!');
+        }
+        function edit() {
+          msgB.value = msg;
+          notif.innerHTML = 'type a message:';
+          msgB.disabled = false;
+          msgB.focus();
+          msgB.style.backgroundColor = '#fff';
+          encBt.innerHTML = 'encrypt it with my PGP public key';
+          sendBt.href = '';
+          encBt.style.display = 'inline-block';
+          sendBt.style.display = 'none';
+          editBt.style.display = 'none';
+          cpBtS.style.display = 'none';
+        }
+    </script>
+  </body>
+</html>
